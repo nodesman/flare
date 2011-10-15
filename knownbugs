@@ -1,0 +1,3 @@
+Flare core bugs:
+
+1. inserting a text area in the design view with default text. The default text is not added.

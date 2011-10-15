@@ -1,0 +1,10 @@
+<select name="country">
+<option>India</option>
+<option>Indonesia</option>
+<option>Thailand</option>
+<option>Sri Lanka</option>
+<option>Vietnam</option>
+<option>Bangladesh</option>
+<option>Brazil</option>
+</select>
+
