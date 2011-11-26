@@ -337,6 +337,7 @@ void flare::newJSFile()
 
 void flare::newHTMLFile()
 {
+    /*
     Document *doc = new HTMLDocument(this->editor);
     this->editor->addSubWindow(doc);
     this->initializeDocument(doc);
@@ -344,6 +345,7 @@ void flare::newHTMLFile()
     doc->setAttribute(Qt::WA_DeleteOnClose);
     doc->show();
     emit newdocument();
+    */
 }
 
 void flare::newFlexFile()

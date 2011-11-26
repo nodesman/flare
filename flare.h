@@ -57,7 +57,13 @@ protected:
 public slots:
     void documentClosed();
     void documentChanged();
-    void createNewDocument(QString filepath,QString type,QString templateName);
+    void createNewDocument(QString filepath,QString type,QString templateName){}
+
+    void newPHPFile();
+    void newCSSFile();
+    void newJSFile();
+    void newHTMLFile();
+    void newFlexFile();
 
     void save();
     void saveAs();
