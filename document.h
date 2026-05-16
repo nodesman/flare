@@ -1,6 +1,6 @@
 #ifndef DOCUMENT_H
 #define DOCUMENT_H
-#include <QtGui>
+#include <QtWidgets>
 #include <QFileDialog>
 #include "codeeditor.h"
 #include "syntaxhighlighter.h"

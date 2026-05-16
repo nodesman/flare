@@ -1,7 +1,7 @@
 #ifndef INSERTREGISTRATIONFORM_H
 #define INSERTREGISTRATIONFORM_H
 
-#include <QtGui>
+#include <QtWidgets>
 #include "ui_insertregistrationform.h"
 class InsertRegistrationForm : public QDialog, public Ui::insertRegistrationForm
 {

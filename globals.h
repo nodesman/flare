@@ -1,6 +1,6 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
-#include <QtGui>
+#include <QtWidgets>
 
 #define FL_APPLICATION_NAME "Flare Web Builder"
 #define FL_VERSION "0.1"

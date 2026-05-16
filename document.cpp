@@ -107,7 +107,7 @@ void Document::saveDocument(QString filepath)
     QFile theFile(filepath);
     theFile.open(QIODevice::WriteOnly);
     QTextStream writer(&theFile);
-    theFile.write(this->code.toAscii());
+    writer << this->code;
     this->setWindowTitle(theFile.fileName());
     theFile.close();
     this->savedAtleastOnce = true;

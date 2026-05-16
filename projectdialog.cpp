@@ -1,6 +1,8 @@
 #include "projectdialog.h"
 #include "settings.h"
 #include <QDialog>
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
 ProjectDialog::ProjectDialog(QWidget *parent) :QDialog(parent)
 {
     this->initialize();
@@ -38,9 +40,9 @@ void ProjectDialog::saveproject()
 void ProjectDialog::initialize()
 {
     setupUi(this);
-    QRegExp nameValidation("[a-zA-Z0-9][a-zA-Z0-9]*");
-    QRegExpValidator nameValidator(nameValidation,this);
-    this->projectname->setValidator(&nameValidator);
+    QRegularExpression nameValidation("[a-zA-Z0-9][a-zA-Z0-9]*");
+    auto *nameValidator = new QRegularExpressionValidator(nameValidation, this);
+    this->projectname->setValidator(nameValidator);
 
     connect(this->projectname,SIGNAL(textChanged(QString)),this,SLOT(testCurrentValues()));
     connect(this->projectpath,SIGNAL(textChanged(QString)),this,SLOT(testCurrentValues()));

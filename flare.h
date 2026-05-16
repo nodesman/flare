@@ -1,7 +1,7 @@
 #ifndef FLARE_H
 #define FLARE_H
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "foundry.h"
 #include "globals.h"
@@ -83,7 +83,7 @@ public slots:
     void toggleClipboardOperations(bool);
     void edit_togglePaste();
     void switchProject(QString projectName);
-    void activateSubWindow(QWidget *);
+    void activateSubWindow(QObject *);
     void alert(int);
     void alert(QString);
 

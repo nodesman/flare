@@ -1,6 +1,6 @@
 #include "switchproject.h"
 #include "settings.h"
-#include <QtGui>
+#include <QtWidgets>
 SwitchProject::SwitchProject(QWidget *parent):QDialog(parent)
 {
     this->initialize();
@@ -9,7 +9,7 @@ SwitchProject::SwitchProject(QWidget *parent):QDialog(parent)
 SwitchProject::SwitchProject(QString currentProjectName,QWidget *parent):QDialog(parent)
 {
     this->initialize();
-    int pos = this->list.indexOf(QRegExp(currentProjectName));
+    int pos = this->list.indexOf(currentProjectName);
     this->projectlist->setCurrentRow(pos);
 
 }

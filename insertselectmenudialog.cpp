@@ -1,6 +1,6 @@
 #include "insertselectmenudialog.h"
-#include <QtGui>
-#include <QUiLoader>
+#include <QtWidgets>
+#include <QtUiTools/QUiLoader>
 
 InsertSelectMenuDialog::InsertSelectMenuDialog()
 {

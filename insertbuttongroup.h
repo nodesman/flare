@@ -1,6 +1,6 @@
 #ifndef INSERTBUTTONGROUP_H
 #define INSERTBUTTONGROUP_H
-#include <QtGui>
+#include <QtWidgets>
 #include <QDialog>
 #include "ui_insertbuttongroup.h"
 

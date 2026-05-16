@@ -1,6 +1,6 @@
 #include "settings.h"
 #include "globals.h"
-#include <QtGui>
+#include <QtWidgets>
 
 Settings::Settings(QObject *parent):QSettings(FL_SETTINGS_FILE_LOCATION,QSettings::IniFormat,parent)
 {

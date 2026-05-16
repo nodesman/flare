@@ -1,6 +1,6 @@
 #ifndef LINENUMBERAREA_H
 #define LINENUMBERAREA_H
-#include <QtGui>
+#include <QtWidgets>
 #include "completer.h"
 #include <QFocusEvent>
 

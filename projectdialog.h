@@ -1,6 +1,6 @@
 #ifndef PROJECTDIALOG_H
 #define PROJECTDIALOG_H
-#include <QtGui>
+#include <QtWidgets>
 #include <QDialog>
 #include "ui_projectdialog.h"
 

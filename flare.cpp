@@ -12,9 +12,11 @@
 #include "manageprojectsdialog.h"
 #include "switchproject.h"
 #include "flexdocument.h"
-#include <QtGui>
+#include <QtWidgets>
 #include <QClipboard>
-#include <QUiLoader>
+#include <QtUiTools/QUiLoader>
+#include <QFileSystemModel>
+#include <QStandardPaths>
 #include "cssdocument.h"
 
 
@@ -28,7 +30,6 @@ flare::flare(QWidget *parent)
     this->clipboard = QApplication::clipboard();
     this->setWindowState(Qt::WindowMaximized);
     initialize();
-    qDebug(QDesktopServices::storageLocation(QDesktopServices::DataLocation).toAscii());
 
 }
 
@@ -92,9 +93,10 @@ void flare::initialize()
     QDockWidget *dock = new QDockWidget(tr("Project"), this);
     dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
     QTreeView *treeView = new QTreeView;
-    QDirModel theDirectories;
-    treeView->setModel(&theDirectories);
-    treeView->setRootIndex(theDirectories.index(QDir::currentPath()));
+    auto *theDirectories = new QFileSystemModel(treeView);
+    theDirectories->setRootPath(QDir::currentPath());
+    treeView->setModel(theDirectories);
+    treeView->setRootIndex(theDirectories->index(QDir::currentPath()));
 
     dock->setWidget(treeView);
     treeView->show();
@@ -234,7 +236,7 @@ void flare::initialize()
     connect(this->clipboard,SIGNAL(dataChanged()),this,SLOT(edit_togglePaste()));
     connect(this->editor,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(documentChanged()));
     this->attachKeyboardShortcuts();
-    connect(this->windowMapper,SIGNAL(mapped(QWidget*)),this,SLOT(activateSubWindow(QWidget*)));
+    connect(this->windowMapper, SIGNAL(mappedObject(QObject*)), this, SLOT(activateSubWindow(QObject*)));
     connect(this->clipboard,SIGNAL(dataChanged()),this,SLOT(pasteStatus()));
     connect(this->ui->actionText_Field,SIGNAL(triggered()),this,SLOT(htmlCommand()));
     connect(this->ui->actionText_Area,SIGNAL(triggered()),this,SLOT(htmlCommand()));
@@ -337,15 +339,13 @@ void flare::newJSFile()
 
 void flare::newHTMLFile()
 {
-    /*
-    Document *doc = new HTMLDocument(this->editor);
+    Document *doc = new HTMLDocument(QString(), this->editor);
     this->editor->addSubWindow(doc);
     this->initializeDocument(doc);
     doc->setWindowState(Qt::WindowMaximized);
     doc->setAttribute(Qt::WA_DeleteOnClose);
     doc->show();
     emit newdocument();
-    */
 }
 
 void flare::newFlexFile()
@@ -399,7 +399,7 @@ void flare::openfile()
 {
     /*
     QString allowedFileTypes = "Web Documents (*.htm *.html *.php *.js *.css)";
-    QString currentDirectory = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    QString currentDirectory = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     QStringList filePath = QFileDialog::getOpenFileNames(this,"Open File",currentDirectory,allowedFileTypes);
     if (filePath.isEmpty())
         return;
@@ -445,7 +445,7 @@ void flare::saveAs()
 {
     QString defaultFilePath;
     if (flare::currentWorkingDirectory=="")
-         defaultFilePath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+         defaultFilePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     else
         defaultFilePath = currentWorkingDirectory;
     QString fileTypes;
@@ -588,11 +588,12 @@ void flare::updateWindowMenu()
 }
 
 
-void flare::activateSubWindow(QWidget *theWindow)
+void flare::activateSubWindow(QObject *theWindow)
 {
-
-    QMdiSubWindow *targetWindow = (QMdiSubWindow *) theWindow;
-    targetWindow->activateWindow();
+    QMdiSubWindow *targetWindow = qobject_cast<QMdiSubWindow *>(theWindow);
+    if (targetWindow == 0)
+        return;
+    this->editor->setActiveSubWindow(targetWindow);
     targetWindow->setFocus();
 }
 
@@ -768,9 +769,9 @@ void flare::alert(QString message)
 
 void flare::on_actionOpen_triggered()
 {
-    QFileDialog asker(this,"Open",QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
+    QFileDialog asker(this, "Open", QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
     QString fileFilter = "Web Documents (*.php *.htm *.html *.css *.js);;PHP Script (*.php);;HTML Pages (*.htm *.html);;Javascript File (*.js);;Cascading Stylesheets (*.css)";
-    asker.setFilter(fileFilter);
+    asker.setNameFilter(fileFilter);
     int fileCount;
     if (asker.exec())
     {
@@ -819,26 +820,6 @@ void flare::on_actionOpen_triggered()
 void flare::on_actionNew_triggered()
 {
     this->newHTMLFile();
-    /*this->newfile = new NewFileDialog(this);
-
-    QListWidgetItem *item;
-
-    newfile->setModal(true);
-    if (this->newfile->exec())
-    {
-        /*item  = this->newfile->filetypelist->currentItem();
-        if (item == this->newfile->phpFile)
-            this->newPHPFile();
-        else if (item == this->newfile->cssFile)
-            this->newCSSFile();
-        else if (item == this->newfile->htmlFile)
-            this->newHTMLFile();
-        else if (item == this->newfile->jsFile)
-            this->newJSFile();
-        else if (item == this->newfile->flexFile)
-            this->newFlexFile();
-
-    }*/
 }
 
 void flare::on_actionCascade_Windows_triggered()

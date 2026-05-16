@@ -1,6 +1,6 @@
 #ifndef INSERTSELECTMENUDIALOG_H
 #define INSERTSELECTMENUDIALOG_H
-#include <QtGui>
+#include <QtWidgets>
 #include <QDialog>
 #include "ui_insertselectmenu.h"
 

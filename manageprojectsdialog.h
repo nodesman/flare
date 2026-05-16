@@ -1,6 +1,6 @@
 #ifndef MANAGEPROJECTSDIALOG_H
 #define MANAGEPROJECTSDIALOG_H
-#include <QtGui>
+#include <QtWidgets>
 #include <QDialog>
 #include "ui_manageprojectsdialog.h"
 #include "project.h"

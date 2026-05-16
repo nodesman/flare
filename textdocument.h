@@ -1,6 +1,6 @@
 #ifndef TEXTDOCUMENT_H
 #define TEXTDOCUMENT_H
-#include <QtGui>
+#include <QtWidgets>
 #include <QTextDocument>
 
 class TextDocument : public QTextDocument

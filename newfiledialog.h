@@ -1,7 +1,7 @@
 #ifndef NEWFILEDIALOG_H
 #define NEWFILEDIALOG_H
 #include "ui_newfiledialog.h"
-#include <QtGui>
+#include <QtWidgets>
 class NewFileDialog: public QDialog, public Ui::NewFileDialog
 {
     Q_OBJECT;

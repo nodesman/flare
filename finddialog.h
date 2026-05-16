@@ -1,6 +1,6 @@
 #ifndef FINDDIALOG_H
 #define FINDDIALOG_H
-#include <QtGui>
+#include <QtWidgets>
 #include "ui_FindDiag.h"
 
 class FindDialog : public QDialog, public Ui::finddialog

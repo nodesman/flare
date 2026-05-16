@@ -1,5 +1,5 @@
 #include "textdocument.h"
-#include <QtGui>
+#include <QtWidgets>
 
  TextDocument::TextDocument()
  {

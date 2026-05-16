@@ -1,5 +1,5 @@
 #include "insertregistrationform.h"
-#include <QtGui>
+#include <QtWidgets>
 InsertRegistrationForm::InsertRegistrationForm()
 {
 

@@ -1,127 +1,115 @@
 #ifndef HTMLDOCUMENT_H
 #define HTMLDOCUMENT_H
-#include <QtGui>
-#include <QTextEdit>
-#include <QWebView>
+
+#include <QtWidgets>
 #include "document.h"
 #include "finddialog.h"
+
 class Foundry;
 
 class HTMLDocument : public Document
 {
-
     Q_OBJECT
 
     QTabWidget *tabArea;
-    QWebView *previewArea;
-    CodeEditor *codeArea;
-    QWebView *designArea;
-    QString lastDesignSearchKeyword;
-    QWebPage::FindFlags lastDesignSearchFlags;
-    QWebPage *webPage;
-    int currentMode; //0 = design, 1 = code, 2 = preview
-    QTemporaryFile *tmpfile;
-    QString fileContent(QString filePath);
-public:
-    enum Modes { Design, Code, Preview};
+    QTextEdit *designArea;
+    QTextBrowser *previewArea;
+    int currentMode;
+    QString fileContent(const QString &filePath);
+    void mergeDesignCharFormat(const QTextCharFormat &format);
+    void syncFromCurrentMode();
+    void applyBlockTag(const QString &tagName);
 
-    virtual void initialize();
-    HTMLDocument(QString filePath, Foundry *parent);
+public:
+    enum Modes { Design, Code, Preview };
+
+    explicit HTMLDocument(QString filePath, Foundry *parent);
+    void initialize() override;
     void setContent(QString content);
     void connectSignals();
     void setActiveTab(int tabNumber);
     void connectDesignSignals();
+    void setupSave() override;
 
-
-    virtual void setupSave();
 public slots:
     void execCommand(QString command);
     void execCommand(QString command, QString options);
-    void viewModeChanged(int);
-    virtual void adjustActions();
-    virtual void undo();
-    virtual void redo();
-    virtual void cut();
-    virtual void copy();
-    virtual void paste();
-    virtual void selectAll();
-    virtual void findNext();
+    void viewModeChanged(int tabNumber);
+    void adjustActions();
+    void undo() override;
+    void redo() override;
+    void cut() override;
+    void copy() override;
+    void paste() override;
+    void selectAll() override;
+    void findNext() override;
 
-    virtual void bold();
-    virtual void italic();
-    virtual void underline();
+    void bold();
+    void italic();
+    void underline();
 
-    virtual void alignleft();
-    virtual void alignright();
-    virtual void aligncenter();
-    virtual void alignjustify();
+    void alignleft();
+    void alignright();
+    void aligncenter();
+    void alignjustify();
 
-    virtual void listbulleted();
-    virtual void listnumbered();
+    void listbulleted();
+    void listnumbered();
 
-    virtual void increaseindent();
-    virtual void decreaseindent();
+    void increaseindent();
+    void decreaseindent();
 
-    virtual void styleHeading1();
-    virtual void styleHeading2();
-    virtual void styleHeading3();
-    virtual void styleHeading4();
-    virtual void styleHeading5();
-    virtual void styleHeading6();
-    virtual void insertTextField();
-    virtual void insertTextArea();
-    virtual void insertPasswordField();
-    virtual void insertRadioButton();
-    virtual void insertButton();
-    virtual void insertSubmitButton();
-    virtual void insertSelectMenu();
-    virtual void insertCheckboxGroup();
-    virtual void insertRadioGroup();
-    virtual void insertImage();
-    virtual void insertLink();
-    virtual void insertSubscript();
-    virtual void insertSuperscript();
-    virtual void insertJavaApplet();
+    void styleHeading1();
+    void styleHeading2();
+    void styleHeading3();
+    void styleHeading4();
+    void styleHeading5();
+    void styleHeading6();
+    void insertTextField();
+    void insertTextArea();
+    void insertPasswordField();
+    void insertRadioButton();
+    void insertButton();
+    void insertSubmitButton();
+    void insertSelectMenu();
+    void insertCheckboxGroup();
+    void insertRadioGroup();
+    void insertImage();
+    void insertLink();
+    void insertSubscript();
+    void insertSuperscript();
+    void insertJavaApplet();
 
+    void insertRegistrationForm();
+    void insertCommentForm();
+    void insertLoginForm();
+    void insertSearchForm();
+    void insertMailingListOptin();
+    void insertTable();
 
-    //form templates
-    virtual void insertRegistrationForm();
-    virtual void insertCommentForm();
-    virtual void insertLoginForm();
-    virtual void insertSearchForm();
-    virtual void insertMailingListOptin();
+    void attachjQuery(bool silent);
+    QString checkBox(QString name, QString value, QString cssclass, QString id, bool checked);
+    QString radioButton(QString name, QString value, QString cssclass, QString id, bool checked);
+    QString submitButton(QString name, QString value, QString cssclass, QString id);
+    QString button(QString name, QString value, QString cssclass, QString id);
+    QString textField(QString name, QString value, QString cssclass, QString id);
+    QString passwordField(QString name, QString value, QString cssclass, QString id);
+    QString selectMenu(QStringList items, QString name, QString cssclass, QString id);
+    QString link(QString linktext, QString href);
+    QString textArea(QString name, QString value, QString rows, QString cols, QString cssclass, QString id);
 
+    QString selectMenu(QMap<QString, QString> items, QString name, QString cssclass, QString id);
+    void insertAnchor();
+    QString getSelectedText();
+    void insertCheckBox();
+    void doAction(QAction *action);
 
-    virtual void insertTable();
+    void insertHTMLAtCursor(QString htmlToInsert);
+    void execute(QString command, QString parameter);
+    void execute(QString command);
+    QString getType() override;
 
-
-    virtual void attachjQuery(bool);
-    virtual QString checkBox(QString name,QString value, QString cssclass, QString id, bool checked);
-    virtual QString radioButton(QString name,QString value, QString cssclass, QString id, bool checked);
-    virtual QString submitButton(QString name,QString value, QString cssclass, QString id);
-    virtual QString button(QString name,QString value, QString cssclass, QString id);
-    virtual QString textField(QString name,QString value,QString cssclass,QString id);
-    virtual QString passwordField(QString name,QString value,QString cssclass,QString id);
-    virtual QString selectMenu(QStringList items, QString name,QString cssclass,QString id);
-    virtual QString link(QString linktext,QString href);
-    virtual QString textArea(QString name,QString value,QString rows,QString cols,QString cssclass,QString id);
-
-
-    virtual QString selectMenu(QMap <QString,QString> items,QString name,QString cssclass,QString id);
-    virtual void insertAnchor();
-    virtual QString getSelectedText();
-    virtual void insertCheckBox();
-    virtual void doAction(QAction *action);
-
-
-    virtual void insertHTMLAtCursor(QString htmlToInsert);
-    void execute(QString,QString);
-    void execute(QString);
-    virtual QString getType();
-
-    void findText(QString, QTextDocument::FindFlags);
-signals:
-    void dummy();
+    void findText(QString searchKeyword, QTextDocument::FindFlags findflags) override;
 };
 
 #endif // HTMLDOCUMENT_H

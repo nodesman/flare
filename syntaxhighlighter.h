@@ -1,5 +1,6 @@
 #ifndef SYNTAXHIGHLIGHTER_H
 #define SYNTAXHIGHLIGHTER_H
+ #include <QRegularExpression>
  #include <QSyntaxHighlighter>
 
  class QTextDocument;
@@ -17,12 +18,12 @@
  private:
      struct HighlightingRule
      {
-         QRegExp pattern;
+         QRegularExpression pattern;
          QTextCharFormat format;
      };
      QVector<HighlightingRule> highlightingRules;
-     QRegExp commentStartExpression;
-     QRegExp commentEndExpression;
+     QRegularExpression commentStartExpression;
+     QRegularExpression commentEndExpression;
      void cssrules();
      void jsrules();
      void phprules();

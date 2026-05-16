@@ -1,5 +1,5 @@
 #include "insertbuttongroup.h"
-#include <QtGui>
+#include <QtWidgets>
 InsertButtonGroup::InsertButtonGroup()
 {
     setupUi(this);

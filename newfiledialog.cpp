@@ -1,5 +1,5 @@
 #include "newfiledialog.h"
-#include <QtGui>
+#include <QtWidgets>
 
 NewFileDialog::NewFileDialog(QWidget *parent):QDialog(parent)
 {
@@ -16,7 +16,7 @@ NewFileDialog::NewFileDialog(QWidget *parent):QDialog(parent)
   this->clientside = new QWidget(this);
   QHBoxLayout *clientsidelayout = new QHBoxLayout(this->clientside);
   this->clientside->setLayout(clientsidelayout);
-  clientsidelayout->setMargin(0);
+  clientsidelayout->setContentsMargins(0, 0, 0, 0);
   this->clientSideFileTypes = new QListWidget(this);
   this->clientSideFileTypes->addItem(tr("HTML File"));
   this->clientSideFileTypes->addItem(tr("CSS File"));
@@ -27,7 +27,7 @@ NewFileDialog::NewFileDialog(QWidget *parent):QDialog(parent)
   this->clientsidedetail = new QWidget(this);
   QStackedLayout *clientsidedetaillayout = new QStackedLayout(this->clientsidedetail);
   this->clientsidedetail->setLayout(clientsidedetaillayout);
-  clientsidedetaillayout->setMargin(0);
+  clientsidedetaillayout->setContentsMargins(0, 0, 0, 0);
 
   QListWidget *htmlTemplates = new QListWidget(this);
   htmlTemplates->addItem(tr("Plain HTML File"));
@@ -61,7 +61,7 @@ NewFileDialog::NewFileDialog(QWidget *parent):QDialog(parent)
   //this->serverSideFileTypes->addItem(tr("Python File"));
 
   this->detailLayout = new QStackedLayout();
-  detailLayout->setMargin(0);
+  detailLayout->setContentsMargins(0, 0, 0, 0);
   this->detail->setLayout(this->detailLayout);
   detailLayout->addWidget(this->clientside);
   detailLayout->addWidget(this->serverSideFileTypes);
@@ -104,7 +104,7 @@ void NewFileDialog::setButtonStatus()
     qDebug("here");
     QString filepath = this->filepath->text().replace(filename,"");
     qDebug("here");
-    qDebug(filepath.toAscii());
+    qDebug() << filepath;
     qDebug("here");
     QDir dir(filepath);
     if (dir.exists()) //doesn't make sense to me either.

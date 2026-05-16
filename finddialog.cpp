@@ -1,5 +1,5 @@
 #include "finddialog.h"
-#include <QtGui>
+#include <QtWidgets>
 
 FindDialog::FindDialog(QWidget* parent):QDialog(parent)
 {
